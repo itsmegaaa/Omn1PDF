@@ -790,10 +790,6 @@ export default defineConfig(async ({ mode, command }) => {
     // an absolute base so deep-route asset paths resolve to /assets/...
     // Trailing slash required: it becomes `<base href>`, and browsers resolve
     // relative URLs (manifest.json, favicon) against the base's *directory*.
-    base: runSubpath
-      ? `/${runSubpath}/`
-      : process.env.VITE_BUILD_FOR_PREVIEW === "1"
-        ? "/"
-        : "./",
+    base: runSubpath ? `/${runSubpath}/` : "/",
   };
 });

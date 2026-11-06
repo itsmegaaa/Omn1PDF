@@ -134,6 +134,7 @@ export async function getAuthHeaders(): Promise<Record<string, string>> {
   const headers: Record<string, string> = {
     "ngrok-skip-browser-warning": "true",
   };
+  const jwt = getJwtTokenFromStorage();
   if (jwt) {
     headers["Authorization"] = `Bearer ${jwt}`;
   }
