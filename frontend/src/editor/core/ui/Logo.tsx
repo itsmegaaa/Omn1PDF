@@ -38,7 +38,7 @@ export function Logo({
   gap = "0.5rem",
   className,
   style,
-  alt = "Stirling",
+  alt = "OmniPDF",
 }: LogoProps) {
   const showIcon = variant === "iconOnly" || variant === "iconAndText";
   const showText = variant === "textOnly" || variant === "iconAndText";
@@ -75,16 +75,16 @@ export function Logo({
             className="sui-logo__wordmark sui-logo__wordmark--light"
             src={wordmarkLightUrl}
             alt={alt}
-            width={58}
-            height={21}
+            width={116}
+            height={22}
             style={{ height: textHeight }}
           />
           <img
             className="sui-logo__wordmark sui-logo__wordmark--dark"
             src={wordmarkDarkUrl}
             alt={alt}
-            width={58}
-            height={21}
+            width={116}
+            height={22}
             style={{ height: textHeight }}
           />
         </>

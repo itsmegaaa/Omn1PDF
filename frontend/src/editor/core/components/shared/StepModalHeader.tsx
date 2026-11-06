@@ -59,7 +59,7 @@ export function StepModalHeader({
           <div className="portal-stepmodal__brand">
             <img
               src={wordmarkLight}
-              alt="Stirling"
+              alt="OmniPDF"
               className="portal-stepmodal__wordmark wordmark"
             />
             <img

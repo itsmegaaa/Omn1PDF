@@ -1,4 +1,12 @@
-<svg width="22" height="22" viewBox="0 0 117 118" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M4.4266 58.4565L75.1855 0.000123003L75.1856 54.5919L4.4266 113.048L4.4266 58.4565Z" fill="#AD7373"/>
-<path d="M41.7248 62.4581L112.568 3.93241L112.568 58.5889L41.7248 117.115L41.7248 62.4581Z" fill="#8E3131"/>
+<svg width="92" height="100" viewBox="0 0 92 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="markBloodD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+  </defs>
+  <path d="M 46 10 L 80 30 L 80 70 L 46 90 L 12 70 L 12 30 Z" fill="none" stroke="url(#markBloodD)" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 46 10 L 80 30 L 46 50 Z" fill="#DC2626" opacity="0.9"/>
+  <path d="M 12 70 L 46 90 L 46 50 Z" fill="#7F1D1D" opacity="0.95"/>
+  <circle cx="46" cy="50" r="7" fill="#18181B" stroke="#DC2626" stroke-width="3"/>
 </svg>

@@ -1,7 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <!-- Scale only, anchored at the origin: BrandMark.css morphs these paths with matrices written in the mark's own 71x79 units. -->
-  <g transform="scale(0.303797)">
-    <path class="sui-brandmark__a" d="M0 39 L46.5 0 L46.5 35.5 L0 74.5 Z" />
-    <path class="sui-brandmark__b" d="M24 43 L70.5 4 L70.5 39.5 L24 78.5 Z" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="bloodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#B91C1C"/>
+    </linearGradient>
+  </defs>
+  <path d="M 12 2.5 L 20.5 7.5 L 20.5 16.5 L 12 21.5 L 3.5 16.5 L 3.5 7.5 Z" stroke="url(#bloodGrad)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 12 2.5 L 20.5 7.5 L 12 12 Z" fill="#DC2626" opacity="0.9"/>
+  <path d="M 3.5 16.5 L 12 21.5 L 12 12 Z" fill="#7F1D1D" opacity="0.95"/>
+  <circle cx="12" cy="12" r="1.8" fill="#FFFFFF" stroke="#B91C1C" stroke-width="0.8"/>
 </svg>
