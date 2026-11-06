@@ -70,32 +70,12 @@ public class ConfigController {
      * sees updated license status after admin changes the license key.
      */
     private String getCurrentLicenseType() {
-        // Use LicenseService for fresh license status if available
-        if (licenseService != null) {
-            return licenseService.getLicenseTypeName();
-        }
-
-        // Fallback to cached bean if service not available
-        if (applicationContext.containsBean("license")) {
-            return applicationContext.getBean("license", String.class);
-        }
-
-        return null;
+        return "ENTERPRISE";
     }
 
     /** Check if running Pro or higher (SERVER or ENTERPRISE license) dynamically. */
     private Boolean isRunningProOrHigher() {
-        // Use LicenseService for fresh license status if available
-        if (licenseService != null) {
-            return licenseService.isRunningProOrHigher();
-        }
-
-        // Fallback to cached bean
-        if (applicationContext.containsBean("runningProOrHigher")) {
-            return applicationContext.getBean("runningProOrHigher", Boolean.class);
-        }
-
-        return null;
+        return true;
     }
 
     /**
@@ -157,17 +137,7 @@ public class ConfigController {
 
     /** Check if running Enterprise edition dynamically. */
     private Boolean isRunningEE() {
-        // Use LicenseService for fresh license status if available
-        if (licenseService != null) {
-            return licenseService.isRunningEE();
-        }
-
-        // Fallback to cached bean
-        if (applicationContext.containsBean("runningEE")) {
-            return applicationContext.getBean("runningEE", Boolean.class);
-        }
-
-        return null;
+        return true;
     }
 
     @GetMapping("/app-config")

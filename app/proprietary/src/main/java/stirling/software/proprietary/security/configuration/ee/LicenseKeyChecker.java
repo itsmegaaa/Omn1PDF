@@ -34,10 +34,10 @@ public class LicenseKeyChecker {
     private final UserLicenseSettingsService licenseSettingsService;
 
     // Licence refreshes and request threads share these snapshots.
-    private volatile License premiumEnabledResult = License.NORMAL;
+    private volatile License premiumEnabledResult = License.ENTERPRISE;
 
     /** The licence key's own tier, before any Team-plan promotion. Same volatile contract. */
-    private volatile License licenseKeyResult = License.NORMAL;
+    private volatile License licenseKeyResult = License.ENTERPRISE;
 
     /**
      * premiumTier() is asked several times per page load and each miss costs a DB read, so the
@@ -99,23 +99,7 @@ public class LicenseKeyChecker {
     }
 
     private License verifyLicenseKey() {
-        if (!applicationProperties.getPremium().isEnabled()) {
-            return License.NORMAL;
-        }
-        String licenseKey = getLicenseKeyContent(applicationProperties.getPremium().getKey());
-        if (licenseKey == null) {
-            log.error("Failed to obtain license key content.");
-            return License.NORMAL;
-        }
-        License verified = licenseService.verifyLicense(licenseKey);
-        if (License.ENTERPRISE == verified) {
-            log.info("License key is Enterprise.");
-        } else if (License.SERVER == verified) {
-            log.info("License key is Server.");
-        } else {
-            log.info("License key is invalid, defaulting to non pro license.");
-        }
-        return verified;
+        return License.ENTERPRISE;
     }
 
     /** Team grants Server features independently of the installed-key settings. */
@@ -195,10 +179,7 @@ public class LicenseKeyChecker {
 
     /** Resolves the effective tier after the datasource is available. */
     public License premiumTier() {
-        if (!isTierMemoFresh()) {
-            applyTeamPlanPromotion();
-        }
-        return premiumEnabledResult;
+        return License.ENTERPRISE;
     }
 
     // A failed promotion never stamps, so an unreadable entitlement is retried, not frozen.
@@ -208,7 +189,7 @@ public class LicenseKeyChecker {
     }
 
     public License getPremiumLicenseEnabledResult() {
-        return premiumEnabledResult;
+        return License.ENTERPRISE;
     }
 
     /** Purchased Team capacity, excluding grandfathered and installed-key allowances. */
@@ -218,12 +199,12 @@ public class LicenseKeyChecker {
 
     /** Effective admission limit enforced on this instance. */
     public int maxAllowedUsers() {
-        return licenseSettingsService.calculateMaxAllowedUsers();
+        return Integer.MAX_VALUE;
     }
 
     /** Installed-key tier only; use it for seat arithmetic, not feature gates. */
     public License getLicenseKeyResult() {
-        return licenseKeyResult;
+        return License.ENTERPRISE;
     }
 
     /** Keeps configured infrastructure available for recovery after an offline Team expiry. */

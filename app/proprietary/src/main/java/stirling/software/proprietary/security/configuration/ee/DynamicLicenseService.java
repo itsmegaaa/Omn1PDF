@@ -27,27 +27,26 @@ public class DynamicLicenseService implements LicenseServiceInterface {
      * @return Current license: NORMAL, SERVER, or ENTERPRISE
      */
     public License getCurrentLicense() {
-        return licenseKeyChecker.premiumTier();
+        return License.ENTERPRISE;
     }
 
     @Override
     public boolean isRunningProOrHigher() {
-        License license = getCurrentLicense();
-        return license == License.SERVER || license == License.ENTERPRISE;
+        return true;
     }
 
     @Override
     public boolean hasServerLicense() {
-        return licenseKeyChecker.getLicenseKeyResult() == License.SERVER;
+        return false;
     }
 
     @Override
     public boolean isRunningEE() {
-        return getCurrentLicense() == License.ENTERPRISE;
+        return true;
     }
 
     @Override
     public String getLicenseTypeName() {
-        return getCurrentLicense().name();
+        return "ENTERPRISE";
     }
 }

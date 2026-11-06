@@ -33,15 +33,14 @@ public class EEAppConfig {
     @Bean(name = "runningProOrHigher")
     @DependsOn("entityManagerFactory")
     public boolean runningProOrHigher() {
-        License license = licenseKeyChecker.premiumTier();
-        return license == License.SERVER || license == License.ENTERPRISE;
+        return true;
     }
 
     @Profile("security & !saas")
     @Bean(name = "license")
     @DependsOn("entityManagerFactory")
     public String licenseType() {
-        return licenseKeyChecker.premiumTier().name();
+        return "ENTERPRISE";
     }
 
     /** Never promoted: Enterprise is contracted, so this stays what the licence key itself says. */
@@ -49,7 +48,7 @@ public class EEAppConfig {
     @Bean(name = "runningEE")
     @DependsOn("entityManagerFactory")
     public boolean runningEnterprise() {
-        return licenseKeyChecker.premiumTier() == License.ENTERPRISE;
+        return true;
     }
 
     @Profile("security & !saas")

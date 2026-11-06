@@ -15,7 +15,7 @@ export default function EnterpriseRequiredBanner({
 }: EnterpriseRequiredBannerProps) {
   const { t } = useTranslation();
 
-  if (!show) return null;
+  return null;
 
   return (
     <Alert

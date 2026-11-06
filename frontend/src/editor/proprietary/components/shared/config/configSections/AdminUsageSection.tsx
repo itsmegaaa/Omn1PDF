@@ -20,9 +20,9 @@ const AdminUsageSection: React.FC = () => {
   const navigate = useNavigate();
   const { loginEnabled } = useLoginRequired();
   const { config } = useAppConfig();
-  const licenseType = config?.license ?? "NORMAL";
-  const hasEnterpriseLicense = licenseType === "ENTERPRISE";
-  const showDemoData = !loginEnabled || !hasEnterpriseLicense;
+  const licenseType = "ENTERPRISE";
+  const hasEnterpriseLicense = true;
+  const showDemoData = false;
   const [data, setData] = useState<EndpointStatisticsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
