@@ -8,6 +8,9 @@ const apiClient = axios.create({
   baseURL: getApiBaseUrl(),
   responseType: "json",
   withCredentials: true,
+  headers: {
+    "ngrok-skip-browser-warning": "true",
+  },
 });
 
 // Setup interceptors (core does nothing, proprietary adds JWT auth)

@@ -131,8 +131,9 @@ async function refreshAuthToken(client: AxiosInstance): Promise<string> {
 
 /** Auth headers for raw fetch() calls (SSE streams). Async to match SaaS override. */
 export async function getAuthHeaders(): Promise<Record<string, string>> {
-  const headers: Record<string, string> = {};
-  const jwt = getJwtTokenFromStorage();
+  const headers: Record<string, string> = {
+    "ngrok-skip-browser-warning": "true",
+  };
   if (jwt) {
     headers["Authorization"] = `Bearer ${jwt}`;
   }
@@ -155,6 +156,7 @@ export function setupApiInterceptors(client: AxiosInstance): void {
       }
 
       config.headers["X-Browser-Id"] = getBrowserId();
+      config.headers["ngrok-skip-browser-warning"] = "true";
 
       return config;
     },

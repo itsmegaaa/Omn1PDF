@@ -21,6 +21,33 @@ import { applyDevWorktreeLabel } from "@editor/utils/applyDevWorktreeLabel";
 
 applyDevWorktreeLabel();
 
+// Ensure all browser fetch() requests to backend API bypass ngrok browser warning interstitial
+if (typeof window !== "undefined" && typeof window.fetch === "function") {
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    const url =
+      typeof input === "string"
+        ? input
+        : input instanceof URL
+          ? input.href
+          : input.url;
+    if (
+      url.startsWith("/api/") ||
+      url.startsWith("/v1/") ||
+      url.includes("ngrok-free.dev")
+    ) {
+      const headers = new Headers(
+        init?.headers ?? (input instanceof Request ? input.headers : undefined),
+      );
+      if (!headers.has("ngrok-skip-browser-warning")) {
+        headers.set("ngrok-skip-browser-warning", "true");
+      }
+      return originalFetch(input, { ...init, headers });
+    }
+    return originalFetch(input, init);
+  };
+}
+
 const container = document.getElementById("root");
 if (!container) {
   throw new Error("Root container missing in index.html");
