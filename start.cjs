@@ -27,6 +27,11 @@ const backend = spawn('cmd.exe', ['/c', 'gradlew.bat :stirling-pdf:bootRun -PnoS
 });
 
 backend.on('error', (err) => console.error('[Stirling-PDF Backend Error]:', err));
+backend.on('exit', (code) => {
+  console.log(`[Stirling-PDF] Backend exited (code ${code}); delegating restart to PM2...`);
+  process.exit(code ?? 0);
+});
+
 
 function shutdown() {
   console.log('[Stirling-PDF] Shutting down backend service...');

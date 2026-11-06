@@ -552,57 +552,42 @@ public class AdminSettingsController {
             Path appJar = JarPathUtil.currentJar();
             Path helperJar = JarPathUtil.restartHelperJar();
 
-            if (appJar == null) {
-                log.error("Cannot restart: not running from JAR (likely development mode)");
-                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                        .body(
-                                Map.of(
-                                        "error",
-                                        "Restart not available in development mode. Please restart the application manually."));
+            if (appJar != null && helperJar != null && Files.isRegularFile(helperJar)) {
+                // Get current application arguments
+                List<String> appArgs = AppArgsCapture.APP_ARGS.get();
+
+                // Write args to temp file to avoid command-line quoting issues
+                Path argsFile = Files.createTempFile("stirling-app-args-", ".txt");
+                Files.write(argsFile, appArgs, StandardCharsets.UTF_8);
+
+                // Get current process PID and java executable
+                long pid = ProcessHandle.current().pid();
+                String javaBin = JarPathUtil.javaExecutable();
+
+                // Build command to launch restart helper
+                List<String> cmd = new ArrayList<>();
+                cmd.add(javaBin);
+                cmd.add("-jar");
+                cmd.add(helperJar.toString());
+                cmd.add("--pid");
+                cmd.add(Long.toString(pid));
+                cmd.add("--app");
+                cmd.add(appJar.toString());
+                cmd.add("--argsFile");
+                cmd.add(argsFile.toString());
+                cmd.add("--backoffMs");
+                cmd.add("1000");
+
+                log.info("Launching restart helper: {}", String.join(" ", cmd));
+
+                // Launch restart helper process
+                new ProcessBuilder(cmd)
+                        .directory(appJar.getParent().toFile())
+                        .inheritIO() // Forward logs
+                        .start();
+            } else {
+                log.info("Running under process supervisor (PM2/bootRun); exiting for automatic supervisor restart.");
             }
-
-            if (helperJar == null || !Files.isRegularFile(helperJar)) {
-                log.error("Cannot restart: restart-helper.jar not found at expected location");
-                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                        .body(
-                                Map.of(
-                                        "error",
-                                        "Restart helper not found. Cannot perform application restart."));
-            }
-
-            // Get current application arguments
-            List<String> appArgs = AppArgsCapture.APP_ARGS.get();
-
-            // Write args to temp file to avoid command-line quoting issues
-            Path argsFile = Files.createTempFile("stirling-app-args-", ".txt");
-            Files.write(argsFile, appArgs, StandardCharsets.UTF_8);
-
-            // Get current process PID and java executable
-            long pid = ProcessHandle.current().pid();
-            String javaBin = JarPathUtil.javaExecutable();
-
-            // Build command to launch restart helper
-            List<String> cmd = new ArrayList<>();
-            cmd.add(javaBin);
-            cmd.add("-jar");
-            cmd.add(helperJar.toString());
-            cmd.add("--pid");
-            cmd.add(Long.toString(pid));
-            cmd.add("--app");
-            cmd.add(appJar.toString());
-            cmd.add("--argsFile");
-            cmd.add(argsFile.toString());
-            cmd.add("--backoffMs");
-            cmd.add("1000");
-
-            log.info("Launching restart helper: {}", String.join(" ", cmd));
-
-            // Launch restart helper process
-            new ProcessBuilder(cmd)
-                    .directory(appJar.getParent().toFile())
-                    .inheritIO() // Forward logs
-                    .start();
-
             // Clear pending changes since we're restarting
             pendingChanges.clear();
 
