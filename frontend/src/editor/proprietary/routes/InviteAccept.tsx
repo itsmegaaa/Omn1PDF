@@ -46,12 +46,12 @@ export default function InviteAccept() {
 
   // Set document meta
   useDocumentMeta({
-    title: `${t("invite.welcome", "Welcome to OmniPDF")} - OmniPDF`,
+    title: "OmniPDF",
     description: t(
       "app.description",
       "A free, private PDF editor you can run on any infrastructure.",
     ),
-    ogTitle: `${t("invite.welcome", "Welcome to OmniPDF")} - OmniPDF`,
+    ogTitle: "OmniPDF",
     ogDescription: t(
       "app.description",
       "A free, private PDF editor you can run on any infrastructure.",

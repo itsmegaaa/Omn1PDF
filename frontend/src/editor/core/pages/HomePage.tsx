@@ -574,11 +574,7 @@ export default function HomePage() {
     "app.description",
     "A free, private PDF editor you can run on any infrastructure.",
   );
-  const metaTitle = seoOverride
-    ? `${seoOverride.title} - ${appName}`
-    : selectedTool
-      ? `${selectedTool.name} - ${appName}`
-      : appName;
+  const metaTitle = appName;
   const metaDescription =
     seoOverride?.description || selectedTool?.description || defaultDescription;
   useDocumentMeta({

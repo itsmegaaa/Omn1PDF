@@ -354,12 +354,12 @@ export default function Login() {
 
   // Set document meta
   useDocumentMeta({
-    title: `${t("login.title", "Sign in")} - OmniPDF`,
+    title: "OmniPDF",
     description: t(
       "app.description",
       "A free, private PDF editor you can run on any infrastructure.",
     ),
-    ogTitle: `${t("login.title", "Sign in")} - OmniPDF`,
+    ogTitle: "OmniPDF",
     ogDescription: t(
       "app.description",
       "A free, private PDF editor you can run on any infrastructure.",

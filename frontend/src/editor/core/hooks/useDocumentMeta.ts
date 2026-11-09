@@ -40,8 +40,8 @@ export const useDocumentMeta = (meta: MetaOptions) => {
     });
 
     // Update title
-    if (meta.title) {
-      document.title = meta.title;
+    if (meta.title !== undefined) {
+      document.title = "OmniPDF";
     }
 
     // Update or create meta tags
@@ -75,7 +75,7 @@ export const useDocumentMeta = (meta: MetaOptions) => {
     }
 
     // Update OpenGraph tags
-    updateOrCreateProperty("og:site_name", "Stirling PDF");
+    updateOrCreateProperty("og:site_name", "OmniPDF");
     updateOrCreateProperty("og:locale", i18n.language.replace("-", "_"));
 
     if (meta.ogTitle) {
@@ -97,7 +97,7 @@ export const useDocumentMeta = (meta: MetaOptions) => {
 
     // Cleanup function to restore original values
     return () => {
-      document.title = originalTitle;
+      document.title = "OmniPDF";
       if (originalDescription) {
         updateOrCreateMeta("description", originalDescription);
       }
